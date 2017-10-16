@@ -2,8 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.jr.survailancedropboxcam">
 
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application>
         <uses-library android:name="com.google.android.things" />
+
 
         <activity android:name=".MainActivity">
             <intent-filter>
