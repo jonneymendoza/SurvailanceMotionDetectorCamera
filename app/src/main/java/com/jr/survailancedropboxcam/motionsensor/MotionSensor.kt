@@ -12,7 +12,7 @@ class MotionSensor : MotionSensorINF{
     var motionSensorGpio : Gpio
 
     constructor(){
-        motionSensorGpio = PeripheralManagerService().openGpio()
+        motionSensorGpio = PeripheralManagerService().openGpio("")
     }
 
     override fun initialiseComponent() {
