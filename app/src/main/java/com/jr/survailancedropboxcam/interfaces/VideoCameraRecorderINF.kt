@@ -1,5 +1,7 @@
 package com.jr.survailancedropboxcam.interfaces
 
+import com.jr.survailancedropboxcam.interfaces.callback.VideoCameraCallback
+
 /**
  * Created by Jonathan on 11/10/2017
  *
