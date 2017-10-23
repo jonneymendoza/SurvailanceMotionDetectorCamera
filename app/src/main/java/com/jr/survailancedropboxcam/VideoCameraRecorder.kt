@@ -80,10 +80,10 @@ class VideoCameraRecorder : VideoCameraRecorderINF {
 
     private fun setMediaOutputSurface(): ArrayList<Surface> {
         mediaRecorder = MediaRecorder()
-        mediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.DEFAULT)
         mediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA)
         mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
-        mediaRecorder.setOutputFile(context.filesDir.absolutePath)
+        mediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.DEFAULT)
+        mediaRecorder.setOutputFile(context.filesDir.absolutePath + "/"+System.currentTimeMillis())
         mediaRecorder.prepare()
         mediaRecorder.start()
 
