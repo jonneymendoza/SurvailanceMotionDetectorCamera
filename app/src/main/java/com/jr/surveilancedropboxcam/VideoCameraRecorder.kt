@@ -1,4 +1,4 @@
-package com.jr.survailancedropboxcam
+package com.jr.surveilancedropboxcam
 
 import android.content.Context
 import android.hardware.camera2.CameraCaptureSession
@@ -9,12 +9,11 @@ import android.hardware.camera2.CaptureRequest
 import android.media.MediaRecorder
 import android.util.Log
 import android.view.Surface
-import com.jr.survailancedropboxcam.interfaces.callback.VideoCameraCallback
-import com.jr.survailancedropboxcam.interfaces.VideoCameraRecorderINF
+import com.jr.surveilancedropboxcam.interfaces.callback.VideoCameraCallback
+import com.jr.surveilancedropboxcam.interfaces.VideoCameraRecorderINF
 import java.util.ArrayList
 import android.os.Handler
 import android.os.HandlerThread
-
 
 
 /**
@@ -32,6 +31,10 @@ class VideoCameraRecorder : VideoCameraRecorderINF {
     lateinit var captureRequest : CaptureRequest
 
     lateinit var mediaRecorder : MediaRecorder
+
+    lateinit var videoFootagePath : String
+
+    lateinit var videoCaptureCallback : VideoCameraCallback
 
     var cameraStateCalback = object : CameraDevice.StateCallback() {
         override fun onOpened(camera: CameraDevice?) {
@@ -66,7 +69,10 @@ class VideoCameraRecorder : VideoCameraRecorderINF {
         }
 
         override fun onConfigured(session: CameraCaptureSession?) {
-            session?.capture(captureRequest, captureCallback, null)
+//            session?.capture(captureRequest, captureCallback, null)
+            Log.d("JJJ", "about to start capturing")
+            mediaRecorder.start()
+            Log.d("JJJ"," finished executing mediaRecorder.start()")
 
         }
     }
@@ -79,14 +85,17 @@ class VideoCameraRecorder : VideoCameraRecorderINF {
     }
 
     private fun setMediaOutputSurface(): ArrayList<Surface> {
+        videoFootagePath = context.filesDir.absolutePath + "/"+System.currentTimeMillis() + ".mp4"
+        Log.d("JJJ", "videoFootagePath = " + videoFootagePath)
         mediaRecorder = MediaRecorder()
         mediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA)
-        mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.DEFAULT)
+        mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4)
+        mediaRecorder.setVideoFrameRate(25)
         mediaRecorder.setVideoSize(1920,1080)
         mediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.DEFAULT)
-        mediaRecorder.setOutputFile(context.filesDir.absolutePath + "/"+System.currentTimeMillis())
+        mediaRecorder.setOutputFile(videoFootagePath)
         mediaRecorder.prepare()
-        mediaRecorder.start()
+//        mediaRecorder.start()
 
         var outputCaptures = ArrayList<Surface>()
         outputCaptures.add(mediaRecorder.surface)
@@ -100,8 +109,9 @@ class VideoCameraRecorder : VideoCameraRecorderINF {
 
     }
 
-    override fun startRecording(videoCameraCallback: VideoCameraCallback) {
+    override fun startRecording(videoCallback: VideoCameraCallback) {
         val cameraIdList = cameraManager.cameraIdList
+        this.videoCaptureCallback = videoCallback
         cameraManager.openCamera(cameraIdList[0], cameraStateCalback, null)
         Log.d("JJJ", "start recording called")
     }
@@ -109,6 +119,7 @@ class VideoCameraRecorder : VideoCameraRecorderINF {
     override fun stopRecording() {
         mediaRecorder.stop()
         mediaRecorder.release()
+        videoCaptureCallback.onFinishedRecordingSuccess(videoFootagePath)
         Log.d("JJJ", "stop recording called")
     }
 

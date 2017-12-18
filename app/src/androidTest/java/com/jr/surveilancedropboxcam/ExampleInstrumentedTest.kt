@@ -1,4 +1,4 @@
-package com.jr.survailancedropboxcam
+package com.jr.surveilancedropboxcam
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4

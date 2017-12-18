@@ -1,6 +1,6 @@
-package com.jr.survailancedropboxcam.interfaces
+package com.jr.surveilancedropboxcam.interfaces
 
-import com.jr.survailancedropboxcam.interfaces.callback.VideoCameraCallback
+import com.jr.surveilancedropboxcam.interfaces.callback.VideoCameraCallback
 
 /**
  * Created by Jonathan on 11/10/2017

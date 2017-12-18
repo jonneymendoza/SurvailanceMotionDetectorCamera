@@ -1,4 +1,4 @@
-package com.jr.survailancedropboxcam
+package com.jr.surveilancedropboxcam
 
 import org.junit.Test
 

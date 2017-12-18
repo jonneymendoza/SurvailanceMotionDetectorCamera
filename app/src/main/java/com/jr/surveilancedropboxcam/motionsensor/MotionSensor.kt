@@ -1,8 +1,8 @@
-package com.jr.survailancedropboxcam.motionsensor
+package com.jr.surveilancedropboxcam.motionsensor
 
 import com.google.android.things.pio.Gpio
 import com.google.android.things.pio.PeripheralManagerService
-import com.jr.survailancedropboxcam.interfaces.MotionSensorINF
+import com.jr.surveilancedropboxcam.interfaces.MotionSensorINF
 
 /**
  * Created by Jonathan on 19/10/2017.
